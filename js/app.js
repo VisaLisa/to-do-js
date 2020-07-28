@@ -65,9 +65,30 @@ function addToDo(toDo, id, done, trash){
     const position = "beforeend";
     list.insertAdjacentHTML(position, item);
 }
+// add an item to the list by selecting button
+document.addEventListener("click", function(event){
+        const toDo = input.value;
+
+        // if the input isn't empty
+        if(toDo){
+            addToDo(toDo, id, false, false);
+            LIST.push({
+                name: toDo,
+                id : id,
+                done : false,
+                trash: false,
+            });
+
+            // add item to localstorage - this code must be added where the LIST array is updated
+            localStorage.setItem("TODO", JSON.stringify(LIST)); 
+            id++;
+        }
+        input.value = "";
+
+});
 
 // add an item to the list user the enter key
-document.addEventListener("keyup",function(event){
+document.addEventListener("keyup" ,function(event){
     if(event.keyCode == 13){
         const toDo = input.value;
 
@@ -105,6 +126,7 @@ function removeToDo(element){
     LIST[element.id].trash = true;
 }
 
+
 //target an element created dynamically
 list.addEventListener("click", function(event){
     const element = event.target; // return the clicked element inside list
@@ -124,10 +146,4 @@ list.addEventListener("click", function(event){
 
 
 //Example task
-addToDo("Coffee", 1 , true ,false);
-
-// //clear localStorage
-// clear.addEventListener('click',function(){
-//     localStorage.clear();
-//     location.reload();
-// });
+// addToDo("Coffee", 1 , true ,false);
